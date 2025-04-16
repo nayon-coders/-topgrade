@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "772394388485",
+    "project_id": "client-project-test-firebase",
+    "storage_bucket": "client-project-test-firebase.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772394388485:android:c43af1811089cca030e06c",
+        "android_client_info": {
+          "package_name": "com.example.kuwait_elearing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772394388485-qbtoaajr6kbhff20nakd30h3prrgp8ji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDawP3_NBrn7im9pb2QgRLH0ACU0fsdajA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772394388485-qbtoaajr6kbhff20nakd30h3prrgp8ji.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
