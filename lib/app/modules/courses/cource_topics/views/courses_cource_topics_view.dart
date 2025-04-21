@@ -15,9 +15,7 @@ class CoursesCourceTopicsView extends GetView<CoursesCourceTopicsController> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.getCourseTopics(Get.arguments); // Fetch topics with course ID
-    });
+
     return Scaffold(
       body: Container(
         height: Get.height,
@@ -49,8 +47,8 @@ class CoursesCourceTopicsView extends GetView<CoursesCourceTopicsController> {
               SizedBox(height: 10,),
               Expanded(
                 child: Obx(() {
-                    return controller.isLoading.value ? Center(child: CircularProgressIndicator.adaptive(backgroundColor: AppColor.white,),)
-                        : controller.topicsModel.value.data != null && controller.topicsModel.value.data!.courseTopic!.isEmpty
+                    return controller.isLoading.value  ||  controller.topicsModel.value.data == null ?  Center(child: CircularProgressIndicator.adaptive(backgroundColor: AppColor.white,),)
+                        : controller.topicsModel.value.data!.courseTopic!.isEmpty
                         ? SizedBox(
                             height: 400,
                       child: NoDataFound() ):GridView.count(
@@ -61,7 +59,10 @@ class CoursesCourceTopicsView extends GetView<CoursesCourceTopicsController> {
                           crossAxisCount: 2,
                           children: controller.topicsModel.value.data!.courseTopic!.map((data){
                             return InkWell(
-                              onTap: ()=>Get.toNamed(Routes.COURSES_SINGLE_COURSE_INSTRACTOR),
+                              onTap: (){
+                                controller.topicsId = data.id.toString();
+                                Get.toNamed(Routes.COURSES_SINGLE_COURSE_INSTRACTOR);
+                              },
                               child: Container(
                                 width: 150,
                                 height: 150,
@@ -71,6 +72,7 @@ class CoursesCourceTopicsView extends GetView<CoursesCourceTopicsController> {
                                 ),
                                 child: Center(
                                   child: Text("${data.name}",
+                                    textAlign: TextAlign.center,
                                     style: normalText(),
                                   ),
                                 ),

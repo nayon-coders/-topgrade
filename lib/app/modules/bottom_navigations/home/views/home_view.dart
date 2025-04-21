@@ -81,13 +81,14 @@ class HomeView extends GetView<HomeController> {
                   visible: controller.isUniversity.value,
                   child: controller.iAllUniversityCourse.value
                       ? Center(child: CircularProgressIndicator.adaptive(backgroundColor: AppColor.white,),)
-                       : controller.allUniversityCourseModel.value.data!.isEmpty
+                       : controller.allUniversityCourseModel.value.data == null
                       ? SizedBox(height: 400, child: NoDataFound(),)
                       : Column(
                        children: controller.allUniversityCourseModel.value.data!.map((data){
                       return InkWell(
                        onTap: (){
-                         Get.toNamed(Routes.COURSES_COURCE_TOPICS, arguments: data.id.toString());
+                         controller.selectedCourseID.value = data.id.toString(); //assign the value for the course id.
+                         Get.toNamed(Routes.COURSES_SINGLE_COURSE);
                        },
                         child: Container(
                           margin: EdgeInsets.only(bottom: 10),
@@ -118,50 +119,50 @@ class HomeView extends GetView<HomeController> {
                 );
               }
             ),
-            Obx((){
-              return Visibility(
-                visible: controller.isUniversity.value == false,
-                child: controller.iAllUniversityCourse.value ? Center(child: CircularProgressIndicator.adaptive(backgroundColor: AppColor.white,),) : Column(
-                  children: controller.allUniversityCourseModel.value.data!.map((data){
-                    return InkWell(
-                      onTap: (){
-                        if( controller.isUniversity.value == true){
-                          Get.toNamed(Routes.COURSES_SINGLE_COURSE);
-                          return;
-                        }else{
-                          Get.toNamed(Routes.STUDENT_SINGLE_COURSE);
-                          return;
-                        }
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("${data.title}",
-                              style: GoogleFonts.finlandica(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700
-                              ),
-                            ),
-                            SizedBox(height: 8,),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: AppNetworkImage(
-                                height: 170,
-                                url: data.image!,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              );
-            }
-            )
+            // Obx((){
+            //   return Visibility(
+            //     visible: controller.isUniversity.value == false,
+            //     child: controller.iAllUniversityCourse.value ? Center(child: CircularProgressIndicator.adaptive(backgroundColor: AppColor.white,),) : Column(
+            //       children: controller.allUniversityCourseModel.value.data!.map((data){
+            //         return InkWell(
+            //           onTap: (){
+            //             if( controller.isUniversity.value == true){
+            //               Get.toNamed(Routes.COURSES_SINGLE_COURSE);
+            //               return;
+            //             }else{
+            //               Get.toNamed(Routes.STUDENT_SINGLE_COURSE);
+            //               return;
+            //             }
+            //           },
+            //           child: Container(
+            //             margin: EdgeInsets.only(bottom: 10),
+            //             child: Column(
+            //               mainAxisAlignment: MainAxisAlignment.start,
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 Text("${data.title}",
+            //                   style: GoogleFonts.finlandica(
+            //                       fontSize: 16,
+            //                       fontWeight: FontWeight.w700
+            //                   ),
+            //                 ),
+            //                 SizedBox(height: 8,),
+            //                 ClipRRect(
+            //                   borderRadius: BorderRadius.circular(100),
+            //                   child: AppNetworkImage(
+            //                     height: 170,
+            //                     url: data.image!,
+            //                   ),
+            //                 )
+            //               ],
+            //             ),
+            //           ),
+            //         );
+            //       }).toList(),
+            //     ),
+            //   );
+            // }
+            // )
 
 
           ],

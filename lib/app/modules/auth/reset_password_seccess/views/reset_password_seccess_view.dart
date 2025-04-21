@@ -52,7 +52,7 @@ class ResetPasswordSeccessView extends GetView<ResetPasswordSeccessController> {
                   ),
                 ),
                 SizedBox(height: 60,),
-                Center(child: AppButton(title: "Continue", onTap: ()=>Get.toNamed(Routes.LOGIN),),),
+                Center(child: AppButton(title: "Continue", onTap: ()=>Get.offAllNamed(Routes.LOGIN),),),
                 SizedBox(height: 30,),
                 //form
               ],

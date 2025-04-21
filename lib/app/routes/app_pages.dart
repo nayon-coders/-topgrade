@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kuwait_elearing/app/middleware/auth_middleware.dart';
+import 'package:kuwait_elearing/app/modules/checkout/views/payment.dart';
 
 import '../modules/assignment_order_details/bindings/assignment_order_details_binding.dart';
 import '../modules/assignment_order_details/views/assignment_order_details_view.dart';
@@ -181,7 +182,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.COURSES_COURSE_VIDEO_OVERVIEW,
-      page: () => const CoursesCourseVideoOverviewView(),
+      page: () =>  CoursesCourseVideoOverviewView(),
       binding: CoursesCourseVideoOverviewBinding(),
     ),
     GetPage(
@@ -192,6 +193,11 @@ class AppPages {
     GetPage(
       name: _Paths.CHECKOUT,
       page: () => const CheckoutView(),
+      binding: CheckoutBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYMENT,
+      page: () => const Payment(),
       binding: CheckoutBinding(),
     ),
     GetPage(

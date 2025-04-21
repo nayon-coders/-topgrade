@@ -10,12 +10,16 @@ import 'package:kuwait_elearing/utility/app_const.dart';
 class HomeController extends GetxController {
   //TODO: Implement HomeController
 
+  static HomeController get to => Get.find();
+  RxString selectedCourseID = "".obs;
+
   @override
   void onInit() {
     getAllUniversityCourse(); //inital
     super.onInit();
   }
 
+  //selected course id
   RxBool isUniversity = true.obs;
   //select level
   void selectLevel(value){

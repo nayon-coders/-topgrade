@@ -31,6 +31,7 @@ abstract class Routes {
       _Paths.COURSES_COURSE_VIDEO_OVERVIEW;
   static const CART = _Paths.CART;
   static const CHECKOUT = _Paths.CHECKOUT;
+  static const PAYMENT = _Paths.PAYMENT;
   static const STUDENT_SINGLE_COURSE = _Paths.STUDENT_SINGLE_COURSE;
   static const STUDENT_STUDY_NOTE = _Paths.STUDENT_STUDY_NOTE;
   static const STUDENT_HOME_TUTORING = _Paths.STUDENT_HOME_TUTORING;
@@ -75,6 +76,7 @@ abstract class _Paths {
   static const COURSES_COURSE_VIDEO_OVERVIEW = '/course-video-overview';
   static const CART = '/cart';
   static const CHECKOUT = '/checkout';
+  static const PAYMENT = '/payment';
   static const STUDENT_SINGLE_COURSE = '/student-single-course';
   static const STUDENT_STUDY_NOTE = '/study-note';
   static const STUDENT_HOME_TUTORING = '/home-tutoring';

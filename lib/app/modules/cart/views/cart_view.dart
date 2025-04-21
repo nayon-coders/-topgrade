@@ -7,6 +7,7 @@ import 'package:kuwait_elearing/app/widgets/app_network_images.dart';
 import 'package:kuwait_elearing/app/widgets/app_style.dart';
 import 'package:kuwait_elearing/app/widgets/app_top_bar.dart';
 import 'package:kuwait_elearing/app/widgets/default_page_layout.dart';
+import 'package:kuwait_elearing/app/widgets/nodata_found.dart';
 import 'package:kuwait_elearing/utility/app_color.dart';
 
 import '../controllers/cart_controller.dart';
@@ -51,53 +52,68 @@ class CartView extends GetView<CartController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: 3,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (_, index){
-                          return  ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: AppNetworkImage(
-                                url: "https://s3-alpha-sig.figma.com/img/0911/fac2/c7449f95cc7e0e4bd4153a5c3c00d739?Expires=1745193600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=tryQEdi0Dm2n4i5pfuSLcmd91Ok7ThrhNy8kCEqv4or~ppWXvrlL7eKhKbFrm-bHDcV6TiH8wnN6Z4H1e9NzMiyoeZaDCH2sG9ssrMknoatWwfwjLvVheOlyX7URGhPueVDL1EK-if9m98G4l-vhPd2NCYW1qrxapQ2mloCgOQGUvhh5p~pkIbxxyagdFxGdk04Vy-ukauFeqFQbfZ6k6jjtApzxdtlq9LHdDVKcTbsTAGp0Jwq86w~8lJ-L4SLu9m69qpvdYr~7zlmBc9AbSpSP3OppHyQiE1FX4I5eO~1eqdb-Fq1YF8rxxgD0wy-3BzCNyRdp4CPNs51-M569qw__",
-                                height: 60,
-                                weight: 60,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            title: Text("Mathematics: Calculus 1",
-                              style: normalText(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500
-                              ),
-                            ),
-                            subtitle: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("By: Eng. Ahmad",
-                                  style: normalText(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500
-                                  ),
-                                ),
-                                SizedBox(height: 5,),
-                                Text("10.000 KD",
-                                  style: normalText(
-                                      fontSize: 15
-                                  ),
-                                ),
-                              ],
-                            ),
-                            trailing: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child: Icon(Icons.delete, color: Colors.white,),
-                            ),
+                      child: Obx(() {
+                          return controller.isLoading.value
+                              ? Center(child: CircularProgressIndicator.adaptive(backgroundColor: Colors.white,),)
+                              : controller.myCardModel.value.data == null || controller.myCardModel.value.data!.isEmpty
+                              ? SizedBox(
+                                height: 300,
+                                child: NoDataFound(),
+                              ) :ListView.builder(
+                                itemCount: controller.myCardModel.value.data!.length,
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (_, index){
+                                  var data = controller.myCardModel.value.data![index];
+                                  return  ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    leading: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: AppNetworkImage(
+                                        url: data.courseImage!,
+                                        height: 60,
+                                        weight: 60,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    title: Text(data.courseTitle!,
+                                      style: normalText(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500
+                                      ),
+                                    ),
+                                    subtitle: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("${data.teacherFirstName}, ${data.teacherLastName}, ",
+                                          style: normalText(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500
+                                          ),
+                                        ),
+                                        SizedBox(height: 5,),
+                                        Text("${double.parse("${data.price}").toStringAsFixed(2)} KD",
+                                          style: normalText(
+                                              fontSize: 15
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    trailing:  InkWell(
+                                      onTap: (){
+                                        controller.deleteCard(data.cardId.toString());
+                                      },
+                                      child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: Icon(Icons.delete, color: Colors.white,),
+                                      ),
+                                    )
 
-                          );
-                        },
+                                  );
+                                },
+                              );
+                        }
                       ),
                     ),
                     SizedBox(height: 10,),

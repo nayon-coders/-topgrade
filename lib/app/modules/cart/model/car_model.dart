@@ -1,25 +1,25 @@
 // To parse this JSON data, do
 //
-//     final myOrderModel = myOrderModelFromJson(jsonString);
+//     final myCardModel = myCardModelFromJson(jsonString);
 
 import 'dart:convert';
 
-MyOrderModel myOrderModelFromJson(String str) => MyOrderModel.fromJson(json.decode(str));
+MyCardModel myCardModelFromJson(String str) => MyCardModel.fromJson(json.decode(str));
 
-String myOrderModelToJson(MyOrderModel data) => json.encode(data.toJson());
+String myCardModelToJson(MyCardModel data) => json.encode(data.toJson());
 
-class MyOrderModel {
+class MyCardModel {
   final bool? success;
   final String? message;
   final List<Datum>? data;
 
-  MyOrderModel({
+  MyCardModel({
     this.success,
     this.message,
     this.data,
   });
 
-  factory MyOrderModel.fromJson(Map<String, dynamic> json) => MyOrderModel(
+  factory MyCardModel.fromJson(Map<String, dynamic> json) => MyCardModel(
     success: json["success"],
     message: json["message"],
     data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
@@ -33,70 +33,8 @@ class MyOrderModel {
 }
 
 class Datum {
-  final int? id;
+  final int? cardId;
   final int? userId;
-  final String? orderId;
-  final String? cNumber;
-  final double? subTotal;
-  final int? tax;
-  final int? couponDiscount;
-  final double? totalPrice;
-  final String? couponCode;
-  final String? status;
-  final DateTime? createAt;
-  final DateTime? updatedAt;
-  final List<OrderItem>? orderItems;
-
-  Datum({
-    this.id,
-    this.userId,
-    this.orderId,
-    this.cNumber,
-    this.subTotal,
-    this.tax,
-    this.couponDiscount,
-    this.totalPrice,
-    this.couponCode,
-    this.status,
-    this.createAt,
-    this.updatedAt,
-    this.orderItems,
-  });
-
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    userId: json["user_id"],
-    orderId: json["order_id"],
-    cNumber: json["c_number"],
-    subTotal: json["sub_total"]?.toDouble(),
-    tax: json["tax"],
-    couponDiscount: json["coupon_discount"],
-    totalPrice: json["total_price"]?.toDouble(),
-    couponCode: json["coupon_code"],
-    status: json["status"],
-    createAt: json["create_at"] == null ? null : DateTime.parse(json["create_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    orderItems: json["order_items"] == null ? [] : List<OrderItem>.from(json["order_items"]!.map((x) => OrderItem.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "user_id": userId,
-    "order_id": orderId,
-    "c_number": cNumber,
-    "sub_total": subTotal,
-    "tax": tax,
-    "coupon_discount": couponDiscount,
-    "total_price": totalPrice,
-    "coupon_code": couponCode,
-    "status": status,
-    "create_at": createAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "order_items": orderItems == null ? [] : List<dynamic>.from(orderItems!.map((x) => x.toJson())),
-  };
-}
-
-class OrderItem {
   final String? type;
   final int? packagesId;
   final String? packagesTitle;
@@ -121,7 +59,9 @@ class OrderItem {
   final int? topicId;
   final String? topicName;
 
-  OrderItem({
+  Datum({
+    this.cardId,
+    this.userId,
     this.type,
     this.packagesId,
     this.packagesTitle,
@@ -147,7 +87,9 @@ class OrderItem {
     this.topicName,
   });
 
-  factory OrderItem.fromJson(Map<String, dynamic> json) => OrderItem(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+    cardId: json["card_id"],
+    userId: json["user_id"],
     type: json["type"],
     packagesId: json["packages_id"],
     packagesTitle: json["packages_title"],
@@ -174,6 +116,8 @@ class OrderItem {
   );
 
   Map<String, dynamic> toJson() => {
+    "card_id": cardId,
+    "user_id": userId,
     "type": type,
     "packages_id": packagesId,
     "packages_title": packagesTitle,

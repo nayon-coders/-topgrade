@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 
 class CoursesSingleCourseController extends GetxController {
   //TODO: Implement CoursesSingleCourseController
-
   final count = 0.obs;
   @override
   void onInit() {

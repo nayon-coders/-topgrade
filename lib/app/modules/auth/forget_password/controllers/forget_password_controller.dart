@@ -23,6 +23,7 @@ class ForgetPasswordController extends GetxController {
     var response = await ApiServer.withoutPostApi(url: ApiConfig.EMAIL_VERIFY, body: {"email": email.value.text});
     if(response.statusCode == 200){
       Get.toNamed(Routes.OTP, arguments: email.value.text);
+      isSendingOTP.value = false;
     }else{
       Get.snackbar("Error!", "Verification code send failed!",
         backgroundColor: AppColor.primaryColor, colorText: AppColor.white

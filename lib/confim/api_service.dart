@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kuwait_elearing/confim/api_config.dart';
@@ -46,7 +48,24 @@ class ApiServer{
   }
 
   // with token post
-  static Future<http.Response> postApi({required String url, Map<String, dynamic>? body, String? token})async{
+  static Future<http.Response> postApi({required String url, Map<String, dynamic>? body})async{
+    var response = await http.post(Uri.parse(url),
+        body: jsonEncode(body),
+        headers: {
+        //  "Accept" : "application/json",
+          "Content-Type" : "application/json",
+          "Authorization" : "Bearer ${sharedPreferences!.getString(AppConst.TOKEN)!}"
+        }
+    );
+    print("POST API URL ----- ${url}");
+    print("POST API STATUS CODE ----- ${response.statusCode}");
+    print("POST API BODY ----- ${response.body}");
+    return response;
+  }
+
+
+  // with token post
+  static Future<http.Response> putApi({required String url, Map<String, dynamic>? body, String? token})async{
     var response = await http.put(Uri.parse(url),
         body: body,
         headers: {
@@ -54,8 +73,22 @@ class ApiServer{
           "Authorization" : "Bearer ${sharedPreferences!.getString(AppConst.TOKEN)!}"
         }
     );
-    print("POST API STATUS CODE ----- ${response.statusCode}");
-    print("POST API BODY ----- ${response.body}");
+    print("PUT API URL ----- ${url}");
+    print("PUT API STATUS CODE ----- ${response.statusCode}");
+    print("PUT API BODY ----- ${response.body}");
+    return response;
+  }
+  // with token post
+  static Future<http.Response> deleteApi({required String url})async{
+    var response = await http.delete(Uri.parse(url),
+        headers: {
+          "Accept" : "application/json",
+          "Authorization" : "Bearer ${sharedPreferences!.getString(AppConst.TOKEN)!}"
+        }
+    );
+    print("DELETE API URL ----- ${url}");
+    print("DELETE API STATUS CODE ----- ${response.statusCode}");
+    print("DELETE API BODY ----- ${response.body}");
     return response;
   }
 

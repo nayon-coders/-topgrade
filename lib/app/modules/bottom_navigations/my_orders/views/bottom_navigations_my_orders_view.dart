@@ -7,6 +7,7 @@ import 'package:kuwait_elearing/app/routes/app_pages.dart';
 import 'package:kuwait_elearing/app/widgets/app_network_images.dart';
 import 'package:kuwait_elearing/app/widgets/app_style.dart';
 import 'package:kuwait_elearing/app/widgets/app_top_bar.dart';
+import 'package:kuwait_elearing/app/widgets/nodata_found.dart';
 import 'package:kuwait_elearing/utility/app_color.dart';
 
 import '../../../../widgets/default_page_layout.dart';
@@ -132,7 +133,7 @@ class BottomNavigationsMyOrdersView
                               ),
                               child: Center(
                                 child: Obx(() {
-                                    return Text("${controller.myCourseOrderListModel.value.length}",
+                                    return Text("${controller.myCourseOrderListModel.value.data!.length}",
                                       style: normalText(
                                           fontSize: 10, fontColor: AppColor.white
                                       ),
@@ -171,91 +172,92 @@ class AssignmentList extends GetView<BottomNavigationsMyOrdersController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-        return Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: controller.myAssignmentOrderListModel.value.length,
-            itemBuilder: (_, index){
-              var data =  controller.myAssignmentOrderListModel.value[index];
-              return InkWell(
-                onTap: ()=>data.type == "course"
-                    ? Get.toNamed(Routes.COURSE_ORDER_DETAILS)
-                    : Get.toNamed(Routes.ASSIGNMENT_ORDER_DETAILS),
-                child: Container(
-                  width: Get.width,
-                  padding: EdgeInsets.all(20),
-                  margin: EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    color: AppColor.primaryColor,
-                    borderRadius: BorderRadius.circular(100)
-                  ),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: AppNetworkImage(url: "${data.image}",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 5,),
-                      SizedBox(
-                        width: 100,
-                        child: Center(
-                          child: Text("${data.engineering}",
-                            textAlign: TextAlign.center,
-                            style: normalText(
-                              fontSize: 14
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 5,),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Assignment: ${data.assignment} ",
-                              textAlign: TextAlign.center,
-                              style: normalText(
-                                fontSize: 13
-                              ),
-                            ),
-                            Text("Date: ${data.date}",
-                              textAlign: TextAlign.center,
-                              style: normalText(
-                                  fontSize: 13
-                              ),
-                            ),
-                            Text("Order #${data.order}",
-                              textAlign: TextAlign.center,
-                              style: normalText(
-                                  fontSize: 13
-                              ),
-                            ),
-                            Text("Status: ${data.status} ",
-                              textAlign: TextAlign.center,
-                              style: normalText(
-                                  fontSize: 13
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      }
-    );
+    // return Obx(() {
+    //     return Expanded(
+    //       child: ListView.builder(
+    //         padding: EdgeInsets.zero,
+    //         itemCount: controller.myAssignmentOrderListModel.value.length,
+    //         itemBuilder: (_, index){
+    //           var data =  controller.myAssignmentOrderListModel.value[index];
+    //           return InkWell(
+    //             onTap: ()=>data.type == "course"
+    //                 ? Get.toNamed(Routes.COURSE_ORDER_DETAILS)
+    //                 : Get.toNamed(Routes.ASSIGNMENT_ORDER_DETAILS),
+    //             child: Container(
+    //               width: Get.width,
+    //               padding: EdgeInsets.all(20),
+    //               margin: EdgeInsets.only(bottom: 10),
+    //               decoration: BoxDecoration(
+    //                 color: AppColor.primaryColor,
+    //                 borderRadius: BorderRadius.circular(100)
+    //               ),
+    //               child: Row(
+    //                 children: [
+    //                   SizedBox(
+    //                     width: 60,
+    //                     height: 60,
+    //                     child: ClipRRect(
+    //                       borderRadius: BorderRadius.circular(100),
+    //                       child: AppNetworkImage(url: "${data.image}",
+    //                         fit: BoxFit.cover,
+    //                       ),
+    //                     ),
+    //                   ),
+    //                   SizedBox(width: 5,),
+    //                   SizedBox(
+    //                     width: 100,
+    //                     child: Center(
+    //                       child: Text("${data.engineering}",
+    //                         textAlign: TextAlign.center,
+    //                         style: normalText(
+    //                           fontSize: 14
+    //                         ),
+    //                       ),
+    //                     ),
+    //                   ),
+    //                   SizedBox(width: 5,),
+    //                   Expanded(
+    //                     child: Column(
+    //                       mainAxisAlignment: MainAxisAlignment.start,
+    //                       crossAxisAlignment: CrossAxisAlignment.start,
+    //                       children: [
+    //                         Text("Assignment: ${data.assignment} ",
+    //                           textAlign: TextAlign.center,
+    //                           style: normalText(
+    //                             fontSize: 13
+    //                           ),
+    //                         ),
+    //                         Text("Date: ${data.date}",
+    //                           textAlign: TextAlign.center,
+    //                           style: normalText(
+    //                               fontSize: 13
+    //                           ),
+    //                         ),
+    //                         Text("Order #${data.order}",
+    //                           textAlign: TextAlign.center,
+    //                           style: normalText(
+    //                               fontSize: 13
+    //                           ),
+    //                         ),
+    //                         Text("Status: ${data.status} ",
+    //                           textAlign: TextAlign.center,
+    //                           style: normalText(
+    //                               fontSize: 13
+    //                           ),
+    //                         ),
+    //                       ],
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+    //             ),
+    //           );
+    //         },
+    //       ),
+    //     );
+    //   }
+    // );
+    return Center();
   }
 }
 
@@ -268,85 +270,89 @@ class CoursesList extends GetView<BottomNavigationsMyOrdersController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return Expanded(
-        child: ListView.builder(
-          padding: EdgeInsets.zero,
-          itemCount: controller.myCourseOrderListModel.value.length,
-          itemBuilder: (_, index){
-            var data =  controller.myCourseOrderListModel.value[index];
-            return InkWell(
-              onTap: ()=>Get.toNamed(Routes.COURSE_ORDER_DETAILS),
-              child: Container(
-                width: Get.width,
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.only(bottom: 10),
-                decoration: BoxDecoration(
-                    color: AppColor.primaryColor,
-                    borderRadius: BorderRadius.circular(100)
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: AppNetworkImage(url: "${data.image}",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+      return controller.isLoading.value
+          ? Center(child: CircularProgressIndicator.adaptive(backgroundColor: AppColor.white,),)
+          : controller.myCourseOrderListModel.value.data == null || controller.myCourseOrderListModel.value.data!.isEmpty
+          ? SizedBox(height: 400, child: NoDataFound(),)
+          : Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemCount: controller.myCourseOrderListModel.value.data!.length,
+              itemBuilder: (_, index){
+                var data =  controller.myCourseOrderListModel.value.data![index];
+                return InkWell(
+                  onTap: ()=>Get.toNamed(Routes.COURSE_ORDER_DETAILS),
+                  child: Container(
+                    width: Get.width,
+                    padding: EdgeInsets.all(20),
+                    margin: EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                        color: AppColor.primaryColor,
+                        borderRadius: BorderRadius.circular(100)
                     ),
-                    SizedBox(width: 5,),
-                    SizedBox(
-                      width: 100,
-                      child: Center(
-                        child: Text("${data.engineering}",
-                          textAlign: TextAlign.center,
-                          style: normalText(
-                              fontSize: 14
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: AppNetworkImage(url: "${data.status}",
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
+                        SizedBox(width: 5,),
+                        SizedBox(
+                          width: 100,
+                          child: Center(
+                            child: Text("${data.status}",
+                              textAlign: TextAlign.center,
+                              style: normalText(
+                                  fontSize: 14
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 5,),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("${data.id}",
+                                textAlign: TextAlign.center,
+                                style: normalText(
+                                    fontSize: 13
+                                ),
+                              ),
+                              Text("Date: ${data.updatedAt}",
+                                textAlign: TextAlign.center,
+                                style: normalText(
+                                    fontSize: 13
+                                ),
+                              ),
+                              Text("Order #${data.couponCode}",
+                                textAlign: TextAlign.center,
+                                style: normalText(
+                                    fontSize: 13
+                                ),
+                              ),
+                              Text("Status: ${data.status} ",
+                                textAlign: TextAlign.center,
+                                style: normalText(
+                                    fontSize: 13
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 5,),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Assignment: ${data.assignment} ",
-                            textAlign: TextAlign.center,
-                            style: normalText(
-                                fontSize: 13
-                            ),
-                          ),
-                          Text("Date: ${data.date}",
-                            textAlign: TextAlign.center,
-                            style: normalText(
-                                fontSize: 13
-                            ),
-                          ),
-                          Text("Order #${data.order}",
-                            textAlign: TextAlign.center,
-                            style: normalText(
-                                fontSize: 13
-                            ),
-                          ),
-                          Text("Status: ${data.status} ",
-                            textAlign: TextAlign.center,
-                            style: normalText(
-                                fontSize: 13
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
+                  ),
+                );
+              },
+            ),
       );
     }
     );

@@ -10,6 +10,7 @@ import '../../../../routes/app_pages.dart';
 class OtpController extends GetxController {
   //TODO: Implement OtpController
 
+
   final SignupController _signupController = Get.put(SignupController());
 
   final count = 0.obs;
@@ -23,10 +24,10 @@ class OtpController extends GetxController {
   RxBool isLoading = false.obs;
   verifyOTP(email)async{
     isLoading.value = true;
-    var response = await ApiServer.withoutPostApi(url: ApiConfig.EMAIL_VERIFY,
+    var response = await ApiServer.withoutPostApi(url: ApiConfig.OTP_VERIFY,
       body: {
         "email": email,
-        "resetCode": otp.value.text
+        "resetCode": otp.value.text,
       },
     );
     isLoading.value = false;

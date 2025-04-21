@@ -18,4 +18,14 @@ class ApiConfig{
 
   static final String UNIVERSITY_ALL_COURSE  = "$BASE_URL/courses/all?status=Active&order=desc";
   static final String UNIVERSITY_ALL_COURSE_TOPICS  = "$BASE_URL/courses/with-topic/";
+  static final String UNIVERSITY_ALL_COURSE_TOPICS_TEACHER  = "$BASE_URL/courses-topic/";
+  static final String UNIVERSITY_SINGLE_COURSE_DETAILS  = "$BASE_URL/courses-deatials/";
+
+
+  static final String ADD_CART  = "$BASE_URL/card/add";
+  static final String GET_CART  = "$BASE_URL/card/my";
+  static final String DELETE_CART  = "$BASE_URL/card/delete/";
+  static final String APPLY_COUPON  = "$BASE_URL/coupon/check";
+  static final String PLACE_ORDER  = "$BASE_URL/order/create";
+  static final String MY_ORDER  = "$BASE_URL/order/my";
 }

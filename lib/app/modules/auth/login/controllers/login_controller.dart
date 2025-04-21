@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:kuwait_elearing/main.dart';
 import 'package:kuwait_elearing/utility/app_color.dart';
 import 'package:kuwait_elearing/utility/app_const.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 class LoginController extends GetxController {
   //TODO: Implement LoginController
 
@@ -90,7 +91,7 @@ class LoginController extends GetxController {
       var data = await _auth.signInWithCredential(credential);
       final firebaseUser = data.user;
       final firebaseIdToken = await firebaseUser?.getIdToken();
-debugPrint("firebaseIdToken--- ${firebaseIdToken}");
+      debugPrint("firebaseIdToken--- ${firebaseIdToken}");
       if (firebaseUser != null) {
         await loginWithSocialMedia(firebaseIdToken);
       }
@@ -104,8 +105,42 @@ debugPrint("firebaseIdToken--- ${firebaseIdToken}");
     }
   }
 
+  //sign in with apple
+  var isLoginWithApple = false.obs;
+
+  signInWithApple() async {
+    isLoginWithApple.value = true;
+    // Request Apple credential
+    final appleCredential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+
+    // Create OAuthCredential for Firebase
+    final oauthCredential = OAuthProvider("apple.com").credential(
+      idToken: appleCredential.identityToken,
+      accessToken: appleCredential.authorizationCode,
+    );
+
+    var data = await _auth.signInWithCredential(oauthCredential);
+    final firebaseUser = data.user;
+    final firebaseIdToken = await firebaseUser?.getIdToken();
+    debugPrint("firebaseIdToken--- ${firebaseIdToken}");
+    if (firebaseUser != null) {
+      await loginWithSocialMedia(firebaseIdToken);
+    }
+    isLoginWithApple.value = false;
+    // Navigate to Home
+    // Get.offAll(() => HomeScreen());
+
+    // Sign in with Firebase
+  }
+
   //logn with social media
   loginWithSocialMedia(token)async{
+
     isLoginWithEmail.value = true;
     var response = await ApiServer.withoutPostApi(
       url: ApiConfig.SOCIAL_MEDIA,
@@ -114,11 +149,28 @@ debugPrint("firebaseIdToken--- ${firebaseIdToken}");
         "token" : token
       }
     );
+    var data = jsonDecode(response.body);
+
     if(response.statusCode == 200){
-      Get.toNamed(Routes.BOTTOM_MENUS);
-      Get.snackbar("Success", "Logged in with Google",  backgroundColor: AppColor.primaryColor, colorText: AppColor.white);
+      sharedPreferences!.setString(AppConst.USER_ID, data["data"]["user"]["id"].toString());
+      sharedPreferences!.setString(AppConst.ROLE, data["data"]["user"]["role"]);
+      sharedPreferences!.setString(AppConst.TOKEN, data["data"]["token"]);
+      //redirect
+      //check account is active or not
+      if(data["data"]["user"]["status"] == "Active"){
+        if(data["data"]["user"]["role"] == "Student"){
+          Get.offAllNamed(Routes.BOTTOM_MENUS);
+        }else{
+          Get.offAllNamed(Routes.TEACHER_PANEL_DASHBOARD);
+        }
+        Get.snackbar("Login", "Login success!", backgroundColor: AppColor.primaryColor, colorText: AppColor.white);
+      }else{
+        Get.snackbar("Failed!", "Account is ${data["data"]["user"]["status"]}", backgroundColor: Colors.red, colorText: AppColor.white);
+      }
+
     }
   }
+
 
   Future<void> signOut() async {
     await _googleSignIn.signOut();

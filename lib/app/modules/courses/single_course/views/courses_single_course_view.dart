@@ -39,7 +39,7 @@ class CoursesSingleCourseView extends GetView<CoursesSingleCourseController> {
               ),
               SizedBox(height: 30,),
               InkWell(
-                onTap: ()=>Get.toNamed(Routes.COURSES_SUBMIT_ASSIGNMENT),
+                onTap: ()=>Get.toNamed(Routes.COURSES_SUBMIT_ASSIGNMENT,  arguments: Get.arguments),
                 child: Container(
                   height: 100,
                   decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class CoursesSingleCourseView extends GetView<CoursesSingleCourseController> {
               ),
               SizedBox(height: 20,),
               InkWell(
-                onTap: ()=>Get.toNamed(Routes.COURSES_COURCE_TOPICS),
+                onTap: ()=>Get.toNamed(Routes.COURSES_COURCE_TOPICS, arguments: Get.arguments),
                 child: Container(
                   height: 100,
                   decoration: BoxDecoration(

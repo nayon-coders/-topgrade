@@ -9,7 +9,7 @@ class BottomMenusView extends GetView<BottomMenusController> {
   const BottomMenusView({super.key});
   @override
   Widget build(BuildContext context) {
-    controller.selectPageIndex.value = Get.arguments ?? 0;
+    controller.selectPageIndex.value = int.tryParse(Get.arguments?.toString() ?? "0") ?? 0;
     return Scaffold(
       body: Obx(() {
           return controller.pages.value[controller.selectPageIndex.value];

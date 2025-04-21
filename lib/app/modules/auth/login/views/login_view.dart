@@ -166,7 +166,9 @@ class LoginView extends GetView<LoginController> {
                     SocailSigninButton(
                       icon: FontAwesomeIcons.apple,
                       title: "Sign in with Apple",
-                      onTap: (){},
+                      onTap: ()async{
+                        await controller.signInWithApple();
+                      },
                     ),
                     SizedBox(height: 10,),
                     SocailSigninButton(
