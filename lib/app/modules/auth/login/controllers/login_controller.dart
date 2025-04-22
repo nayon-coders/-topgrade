@@ -70,7 +70,7 @@ class LoginController extends GetxController {
 
   var isLoginWithEmail = false.obs;
   Future<void> signInWithGoogle() async {
-    signOut();
+    //signOut();
     try {
       isLoginWithEmail.value = true;
 
@@ -99,6 +99,7 @@ class LoginController extends GetxController {
       // Get.offAll(() => HomeScreen());
 
     } catch (e) {
+      print("google login error--- ${e}");
       Get.snackbar("Error", e.toString(),  backgroundColor: Colors.red, colorText: AppColor.white);
     } finally {
       isLoginWithEmail.value = false;

@@ -11,7 +11,7 @@ String myOrderModelToJson(MyOrderModel data) => json.encode(data.toJson());
 class MyOrderModel {
   final bool? success;
   final String? message;
-  final List<Datum>? data;
+  final List<SingleOrderModel>? data;
 
   MyOrderModel({
     this.success,
@@ -22,7 +22,7 @@ class MyOrderModel {
   factory MyOrderModel.fromJson(Map<String, dynamic> json) => MyOrderModel(
     success: json["success"],
     message: json["message"],
-    data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+    data: json["data"] == null ? [] : List<SingleOrderModel>.from(json["data"]!.map((x) => SingleOrderModel.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -32,71 +32,11 @@ class MyOrderModel {
   };
 }
 
-class Datum {
-  final int? id;
-  final int? userId;
-  final String? orderId;
-  final String? cNumber;
-  final double? subTotal;
-  final int? tax;
-  final int? couponDiscount;
-  final double? totalPrice;
-  final String? couponCode;
-  final String? status;
-  final DateTime? createAt;
-  final DateTime? updatedAt;
-  final List<OrderItem>? orderItems;
-
-  Datum({
-    this.id,
-    this.userId,
-    this.orderId,
-    this.cNumber,
-    this.subTotal,
-    this.tax,
-    this.couponDiscount,
-    this.totalPrice,
-    this.couponCode,
-    this.status,
-    this.createAt,
-    this.updatedAt,
-    this.orderItems,
-  });
-
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    userId: json["user_id"],
-    orderId: json["order_id"],
-    cNumber: json["c_number"],
-    subTotal: json["sub_total"]?.toDouble(),
-    tax: json["tax"],
-    couponDiscount: json["coupon_discount"],
-    totalPrice: json["total_price"]?.toDouble(),
-    couponCode: json["coupon_code"],
-    status: json["status"],
-    createAt: json["create_at"] == null ? null : DateTime.parse(json["create_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    orderItems: json["order_items"] == null ? [] : List<OrderItem>.from(json["order_items"]!.map((x) => OrderItem.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "user_id": userId,
-    "order_id": orderId,
-    "c_number": cNumber,
-    "sub_total": subTotal,
-    "tax": tax,
-    "coupon_discount": couponDiscount,
-    "total_price": totalPrice,
-    "coupon_code": couponCode,
-    "status": status,
-    "create_at": createAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "order_items": orderItems == null ? [] : List<dynamic>.from(orderItems!.map((x) => x.toJson())),
-  };
-}
-
-class OrderItem {
+class SingleOrderModel {
+  final int? orderId;
+  final String? orderStatus;
+  final DateTime? orderCreateAt;
+  final DateTime? orderUpdatedAt;
   final String? type;
   final int? packagesId;
   final String? packagesTitle;
@@ -120,8 +60,13 @@ class OrderItem {
   final String? courseImage;
   final int? topicId;
   final String? topicName;
+  final List<MyCoursesVideo>? videos;
 
-  OrderItem({
+  SingleOrderModel({
+    this.orderId,
+    this.orderStatus,
+    this.orderCreateAt,
+    this.orderUpdatedAt,
     this.type,
     this.packagesId,
     this.packagesTitle,
@@ -145,9 +90,14 @@ class OrderItem {
     this.courseImage,
     this.topicId,
     this.topicName,
+    this.videos,
   });
 
-  factory OrderItem.fromJson(Map<String, dynamic> json) => OrderItem(
+  factory SingleOrderModel.fromJson(Map<String, dynamic> json) => SingleOrderModel(
+    orderId: json["order_id"],
+    orderStatus: json["order_status"],
+    orderCreateAt: json["order_create_at"] == null ? null : DateTime.parse(json["order_create_at"]),
+    orderUpdatedAt: json["order_updated_at"] == null ? null : DateTime.parse(json["order_updated_at"]),
     type: json["type"],
     packagesId: json["packages_id"],
     packagesTitle: json["packages_title"],
@@ -171,9 +121,14 @@ class OrderItem {
     courseImage: json["course_image"],
     topicId: json["topic_id"],
     topicName: json["topic_name"],
+    videos: json["videos"] == null ? [] : List<MyCoursesVideo>.from(json["videos"]!.map((x) => MyCoursesVideo.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
+    "order_id": orderId,
+    "order_status": orderStatus,
+    "order_create_at": orderCreateAt?.toIso8601String(),
+    "order_updated_at": orderUpdatedAt?.toIso8601String(),
     "type": type,
     "packages_id": packagesId,
     "packages_title": packagesTitle,
@@ -197,5 +152,42 @@ class OrderItem {
     "course_image": courseImage,
     "topic_id": topicId,
     "topic_name": topicName,
+    "videos": videos == null ? [] : List<dynamic>.from(videos!.map((x) => x.toJson())),
+  };
+}
+
+class MyCoursesVideo {
+  final int? id;
+  final String? url;
+  final int? srNo;
+  final String? title;
+  final String? duration;
+  final int? isPaid;
+
+  MyCoursesVideo({
+    this.id,
+    this.url,
+    this.srNo,
+    this.title,
+    this.duration,
+    this.isPaid,
+  });
+
+  factory MyCoursesVideo.fromJson(Map<String, dynamic> json) => MyCoursesVideo(
+    id: json["id"],
+    url: json["url"],
+    srNo: json["sr_no"],
+    title: json["title"],
+    duration: json["duration"],
+    isPaid: json["isPaid"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "url": url,
+    "sr_no": srNo,
+    "title": title,
+    "duration": duration,
+    "isPaid": isPaid,
   };
 }

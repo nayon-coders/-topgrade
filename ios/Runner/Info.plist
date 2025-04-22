@@ -60,17 +60,7 @@
     <true/>
 
 
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>com.googleusercontent.apps.772394388485-vti0f37ekqggch6hh96u4sti426h85vs</string>
-        </array>
-      </dict>
-    </array>
+
 
     <key>LSApplicationQueriesSchemes</key>
     <array>
@@ -78,15 +68,27 @@
       <string>com.googleusercontent.apps.772394388485-vti0f37ekqggch6hh96u4sti426h85vs</string>
     </array>
 
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-        </array>
-      </dict>
-    </array>
+
+   <key>CFBundleURLTypes</key>
+   <array>
+     <dict>
+       <key>CFBundleTypeRole</key>
+       <string>Editor</string>
+       <key>CFBundleURLSchemes</key>
+       <array>
+         <string>com.googleusercontent.apps.772394388485-vti0f37ekqggch6hh96u4sti426h85vs</string>
+       </array>
+     </dict>
+     <dict>
+       <key>CFBundleURLSchemes</key>
+       <array>
+         <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+       </array>
+     </dict>
+   </array>
+
+
+
     <key>NSUserTrackingUsageDescription</key>
     <string>This identifier will be used to sign in</string>
 

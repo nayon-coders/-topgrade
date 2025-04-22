@@ -12,14 +12,5 @@ class BottomMenusBinding extends Bindings {
     Get.lazyPut<BottomMenusController>(
       () => BottomMenusController(),
     );
-    Get.lazyPut<BottomNavigationsChatController>(
-          () => BottomNavigationsChatController(),
-    );
-    Get.lazyPut<BottomNavigationsMyAccountController>(
-          () => BottomNavigationsMyAccountController(),
-    );
-    Get.lazyPut<BottomNavigationsMyOrdersController>(
-          () => BottomNavigationsMyOrdersController(),
-    );
   }
 }

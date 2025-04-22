@@ -8,10 +8,13 @@ import 'package:kuwait_elearing/app/widgets/app_style.dart';
 import 'package:kuwait_elearing/app/widgets/app_top_bar.dart';
 
 import '../../../../../utility/app_color.dart';
+import '../../../bottom_navigations/home/model/all_university_course_model.dart';
 import '../controllers/courses_single_course_controller.dart';
 
 class CoursesSingleCourseView extends GetView<CoursesSingleCourseController> {
-  const CoursesSingleCourseView({super.key});
+   CoursesSingleCourseView({super.key});
+
+  final SingleUniversityCourseItem data  = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +33,7 @@ class CoursesSingleCourseView extends GetView<CoursesSingleCourseController> {
               //app top bar
               AppTopBar(isBack: true, onBack: ()=>Get.back(),),
               Text(
-                "Engineering",
+                "${data.title}",
                 style: normalText(
                   fontWeight: FontWeight.w700,
                   fontSize: 32,

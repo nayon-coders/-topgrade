@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:kuwait_elearing/app/modules/bottom_navigations/my_orders/model/my_order_model.dart';
 import 'package:kuwait_elearing/confim/api_config.dart';
@@ -15,7 +16,7 @@ class BottomNavigationsMyOrdersController extends GetxController {
     getMyOrdersList();
     super.onInit();
   }
-  RxBool isAssignment = true.obs;
+  RxBool isAssignment = false.obs;
   changeTab(value)=> isAssignment.value = value;
 
   
@@ -26,7 +27,8 @@ class BottomNavigationsMyOrdersController extends GetxController {
     isLoading.value = true;
     var response = await ApiServer.getApi(url: ApiConfig.MY_ORDER);
     if(response.statusCode == 200){
-      myCourseOrderListModel.value = jsonDecode(response.body);
+      debugPrint("jsonDecode(response.body) --- ${jsonDecode(response.body)}");
+      myCourseOrderListModel.value = MyOrderModel.fromJson(jsonDecode(response.body));
     }
     isLoading.value = false;
   }

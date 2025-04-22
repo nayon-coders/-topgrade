@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kuwait_elearing/app/modules/cart/controllers/cart_controller.dart';
 import 'package:kuwait_elearing/app/modules/checkout/model/coupon_model.dart';
+import 'package:kuwait_elearing/app/modules/checkout/views/payment.dart';
+import 'package:kuwait_elearing/app/modules/checkout/views/payment_success.dart';
 import 'package:kuwait_elearing/app/routes/app_pages.dart';
 import 'package:kuwait_elearing/confim/api_config.dart';
 import 'package:kuwait_elearing/confim/api_service.dart';
@@ -95,7 +97,7 @@ class CheckoutController extends GetxController {
       couponCode.value.clear();
       whatsAppNumber.value.clear();
       Get.snackbar("Success!", "Your order is placed", backgroundColor: AppColor.primaryColor, colorText: AppColor.white);
-      Get.offAllNamed(Routes.BOTTOM_MENUS);
+      Get.offAll(PaymentSuccess());
     }else{
       Get.snackbar("Error!", "Your order place failed", backgroundColor: Colors.red, colorText: AppColor.white);
     }

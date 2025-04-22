@@ -12,7 +12,7 @@ class AllUniversityCourseModel {
   final bool? success;
   final String? message;
   final int? totalCourses;
-  final List<Datum>? data;
+  final List<SingleUniversityCourseItem>? data;
 
   AllUniversityCourseModel({
     this.success,
@@ -25,7 +25,7 @@ class AllUniversityCourseModel {
     success: json["success"],
     message: json["message"],
     totalCourses: json["totalCourses"],
-    data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+    data: json["data"] == null ? [] : List<SingleUniversityCourseItem>.from(json["data"]!.map((x) => SingleUniversityCourseItem.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -36,20 +36,20 @@ class AllUniversityCourseModel {
   };
 }
 
-class Datum {
+class SingleUniversityCourseItem {
   final int? id;
   final String? title;
   final String? image;
   final String? status;
 
-  Datum({
+  SingleUniversityCourseItem({
     this.id,
     this.title,
     this.image,
     this.status,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory SingleUniversityCourseItem.fromJson(Map<String, dynamic> json) => SingleUniversityCourseItem(
     id: json["id"],
     title: json["title"],
     image: json["image"],

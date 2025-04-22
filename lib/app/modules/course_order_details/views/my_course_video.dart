@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kuwait_elearing/app/modules/cart/controllers/cart_controller.dart';
 import 'package:kuwait_elearing/app/modules/course_order_details/views/full_screen.dart';
-import 'package:kuwait_elearing/app/modules/courses/course_content/model/single_course_details_model.dart';
-import 'package:kuwait_elearing/app/modules/courses/course_video_overview/views/full_video.dart';
-import 'package:kuwait_elearing/app/widgets/app_style.dart';
-import 'package:kuwait_elearing/app/widgets/app_top_bar.dart';
-import 'package:kuwait_elearing/app/widgets/default_page_layout.dart';
-import 'package:kuwait_elearing/utility/app_color.dart';
 import 'package:video_player/video_player.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 
-import '../../course_content/controllers/courses_course_content_controller.dart';
-import '../controllers/courses_course_video_overview_controller.dart';
+import '../../../../utility/app_color.dart';
+import '../../../widgets/app_style.dart';
+import '../../../widgets/app_top_bar.dart';
+import '../../../widgets/default_page_layout.dart';
+import '../../bottom_navigations/my_orders/model/my_order_model.dart';
+import '../controllers/course_order_details_controller.dart';
 
-class CoursesCourseVideoOverviewView
-    extends GetView<CoursesCourseVideoOverviewController> {
-  CoursesCourseVideoOverviewView({super.key});
+class MyCourseVideo extends GetView<CourseOrderDetailsController> {
+   MyCourseVideo({super.key});
 
-  Semester packageData = Get.arguments["package"] ?? Get.arguments["semester"];
-  Teacher teacherInfo = Get.arguments["teacher"];
 
+   final SingleOrderModel data = Get.arguments;
   @override
   Widget build(BuildContext context) {
-   controller.initializePlayer(packageData.introUrl ?? "https://cdn.pixabay.com/video/2017/04/05/8579-211655655_large.mp4");
-    return Scaffold(
+
+    controller.initializePlayer(data.introUrl ?? "");
+
+    return  Scaffold(
       body: DefaultPageLayout(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -47,6 +43,7 @@ class CoursesCourseVideoOverviewView
                     width: Get.width,
                     decoration: BoxDecoration(
                       color: Colors.black,
+
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.3),
@@ -65,10 +62,11 @@ class CoursesCourseVideoOverviewView
                         children: [
                           Center(
                             child: AspectRatio(
-                              aspectRatio: controller.videoPlayer.value.aspectRatio,
-                              child: VideoPlayer(controller.videoPlayer),
+                              aspectRatio: controller.videoPlayer!.value.aspectRatio,
+                              child: VideoPlayer(controller.videoPlayer!),
                             ),
                           ),
+
 
                           _buildControls(context),
                           Positioned(
@@ -76,7 +74,7 @@ class CoursesCourseVideoOverviewView
                             left: 20,
                             right: 20,
                             child: VideoProgressIndicator(
-                              controller.videoPlayer,
+                              controller.videoPlayer!,
                               allowScrubbing: true,
                               colors: VideoProgressColors(
                                 playedColor: Colors.red,
@@ -103,13 +101,12 @@ class CoursesCourseVideoOverviewView
                             ))),
 
                           ),
-
                           Positioned(
                             bottom: 20,
                             right: 0,
                             child: IconButton(
                               onPressed: (){
-                                Get.to(FullScreenTestVideo(videoPlayer: controller.videoPlayer, totalTime: controller.totalTime.value,));
+                                Get.to(FullScreenVideo(videoPlayer: controller.videoPlayer!, currentTime: controller.currentTime, totalTime: controller.totalTime));
                               },
                               icon: Icon(Icons.fullscreen, color: AppColor.white,),
                             ),
@@ -136,7 +133,7 @@ class CoursesCourseVideoOverviewView
                   children: [
                     Obx(() {
                         return Text(
-                          "${controller.selectedMyCourseVideos.value.title == null ? packageData.title : controller.selectedMyCourseVideos.value.title}",
+                          "${controller.selectedMyCourseVideos.value.title == null ? data.courseTitle : controller.selectedMyCourseVideos.value.title}",
                           style: normalText(
                               fontSize: 18, fontColor: AppColor.primaryColor),
                         );
@@ -144,27 +141,27 @@ class CoursesCourseVideoOverviewView
                     ),
                     SizedBox(height: 5),
                     Text(
-                      "${teacherInfo.firstName} ${teacherInfo.lastName}",
+                      "${data.teacherFirstName} ${data.teacherLastName}",
                       style: normalText(fontSize: 16, fontColor: AppColor.primaryColor),
                     ),
                     SizedBox(height: 8),
                     Divider(height: 1, color: Colors.black),
                     SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.video_camera_back_outlined,
-                          color: Colors.black,
-                          size: 20,
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          "${packageData.videos!.length} Lesson",
-                          style: normalText(fontSize: 16, fontColor: Colors.black),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 5),
+                    // Row(
+                    //   children: [
+                    //     Icon(
+                    //       Icons.video_camera_back_outlined,
+                    //       color: Colors.black,
+                    //       size: 20,
+                    //     ),
+                    //     SizedBox(width: 5),
+                    //     Text(
+                    //       "${data.videos!.length} Lesson",
+                    //       style: normalText(fontSize: 16, fontColor: Colors.black),
+                    //     ),
+                    //   ],
+                    // ),
+                    // SizedBox(height: 5),
                     Row(
                       children: [
                         Icon(
@@ -174,7 +171,7 @@ class CoursesCourseVideoOverviewView
                         ),
                         SizedBox(width: 5),
                         Text(
-                          "${packageData.duration}",
+                          "${data.totalDuration}",
                           style: normalText(fontSize: 16, fontColor: Colors.black),
                         ),
                       ],
@@ -189,12 +186,12 @@ class CoursesCourseVideoOverviewView
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.zero,
-                      itemCount: packageData.videos!.length,
+                      itemCount: data.videos!.length,
                       itemBuilder: (_, index) {
-                        var data = packageData.videos![index];
+                        var videos = data.videos![index];
                         return InkWell(
                           onTap: (){
-                            controller.selectedVideos(data);
+                           controller.selectedVideos(videos);
                           },
                           child: Container(
                             height: 90, // Increased height for better readability
@@ -208,18 +205,18 @@ class CoursesCourseVideoOverviewView
                             child: Row(
                               children: [
                                 Container(
-                                  width: 90,
-                                  height: 90,
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Obx(() {
-                                          return controller.isThumbnailList.value ? Center(child: CircularProgressIndicator.adaptive(backgroundColor: AppColor.white,),) : Image.memory(controller.thumbnailList.value[index]!, fit: BoxFit.cover);
+                                    width: 90,
+                                    height: 90,
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Obx(() {
+                                          return controller.isThumblnilGenareting.value ? CircularProgressIndicator.adaptive(backgroundColor: AppColor.white,)  :Image.memory(controller.thumbnailList.value[index]!, fit: BoxFit.cover);
                                         }
-                                      ),
-                                      Icon(Icons.play_circle_fill, size: 48, color: Colors.white),
-                                    ],
-                                  )
+                                        ),
+                                        Icon(Icons.play_circle_fill, size: 48, color: Colors.white),
+                                      ],
+                                    )
 
 
                                 ),
@@ -229,12 +226,12 @@ class CoursesCourseVideoOverviewView
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "${data.title}",
+                                      "${videos.title}",
                                       style: normalText(fontSize: 16),
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      "${data.duration}",
+                                      "${videos.duration}",
                                       style: normalText(fontSize: 16),
                                     ),
                                   ],
@@ -252,48 +249,9 @@ class CoursesCourseVideoOverviewView
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 100,
-        width: Get.width,
-        padding: EdgeInsets.all(20),
-        margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
-        decoration: BoxDecoration(
-          color: AppColor.primaryColor,
-          borderRadius: BorderRadius.circular(30)
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("${double.parse(packageData.price.toString()).toStringAsFixed(2)} KD",
-              style: normalText(fontSize: 15),
-            ),
-            InkWell(
-              onTap: (){
-                  CartController.to.addToCart(packageData.id.toString(), CoursesCourseContentController.to.isPackage.value ? "packages" : "semester" );
-              },
-              child: Container(
-                width: 100,
-                height: 30,
-                decoration: BoxDecoration(
-                    color: Color(0xffA3850D),
-                    borderRadius: BorderRadius.circular(100)
-                ),
-                child: Center(
-                  child: Text("Add to cart",
-                    style: normalText(
-                        fontSize: 14
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
     );
+
   }
-
-
 
   Widget _buildControls(BuildContext context) {
     return Obx(() {
@@ -312,4 +270,8 @@ class CoursesCourseVideoOverviewView
       );
     });
   }
+
 }
+
+
+

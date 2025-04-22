@@ -27,5 +27,9 @@ class ApiConfig{
   static final String DELETE_CART  = "$BASE_URL/card/delete/";
   static final String APPLY_COUPON  = "$BASE_URL/coupon/check";
   static final String PLACE_ORDER  = "$BASE_URL/order/create";
-  static final String MY_ORDER  = "$BASE_URL/order/my";
+  static final String MY_ORDER  = "$BASE_URL/order/check2";
+
+
+  static final String CREATE_ASSIGNMET  = "$BASE_URL/assignment/create";
+  static final String ASSIGNMENT_ALL  = "$BASE_URL/assignment/all?order=desc";
 }

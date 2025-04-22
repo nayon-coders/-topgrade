@@ -40,6 +40,7 @@ abstract class Routes {
   static const STUDENT_STUDENT_CHECKOUT = _Paths.STUDENT_STUDENT_CHECKOUT;
   static const ASSIGNMENT_ORDER_DETAILS = _Paths.ASSIGNMENT_ORDER_DETAILS;
   static const COURSE_ORDER_DETAILS = _Paths.COURSE_ORDER_DETAILS;
+  static const COURSE_ORDER_DETAILS_VIDEO = _Paths.COURSE_ORDER_DETAILs_VIDEO;
   static const COURSE_ORDER_DETIALS = _Paths.COURSE_ORDER_DETIALS;
   static const EDIT_ACCOUNT_INFO = _Paths.EDIT_ACCOUNT_INFO;
   static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
@@ -85,6 +86,7 @@ abstract class _Paths {
   static const STUDENT_STUDENT_CHECKOUT = '/student-checkout';
   static const ASSIGNMENT_ORDER_DETAILS = '/assignment-order-details';
   static const COURSE_ORDER_DETAILS = '/course-order-details';
+  static const COURSE_ORDER_DETAILs_VIDEO = '/course-order-details-video';
   static const COURSE_ORDER_DETIALS = '/course-order-detials';
   static const EDIT_ACCOUNT_INFO = '/edit-account-info';
   static const CHANGE_PASSWORD = '/change-password';

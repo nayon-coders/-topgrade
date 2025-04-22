@@ -13,6 +13,7 @@ class TeacherPanelDashboardView
     controller.selectPageIndex.value = Get.arguments ?? 0;
     return Scaffold(
       body: Obx(() {
+        //return controller.pages.value[1];
         return controller.pages.value[controller.selectPageIndex.value];
       }
       ),

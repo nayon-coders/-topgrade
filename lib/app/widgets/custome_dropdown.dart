@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:kuwait_elearing/app/widgets/app_style.dart';
 import 'package:kuwait_elearing/utility/app_color.dart';
 
 
@@ -13,6 +14,9 @@ class CustomDropDown<T> extends StatelessWidget {
     this.selectedItemBuilder,
     this.fillColor = Colors.white,
     this.borderSide =BorderSide.none,
+    this.height = 35,
+    this.fontSize = 15,
+    this.fontWeight = FontWeight.w600
   });
 
   final List<T> items;
@@ -22,13 +26,17 @@ class CustomDropDown<T> extends StatelessWidget {
   final DropdownButtonBuilder? selectedItemBuilder;
   final Color fillColor;
   final BorderSide? borderSide;
+  final double height;
+  final double fontSize;
+  final FontWeight fontWeight;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 35,
+      height: height,
       child: DropdownButtonFormField2<T>(
         isExpanded: true,
+        style: normalText( fontSize: fontSize, fontWeight:  fontWeight),
         decoration: InputDecoration(
           fillColor: AppColor.inputFieldColor,
           filled: true,
@@ -52,11 +60,9 @@ class CustomDropDown<T> extends StatelessWidget {
 
         items:items.map((item) => DropdownMenuItem<T>(
           value: item,
-          child: Text("$item",style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: Colors.black,
-          ),),
+          child: Text("$item",
+            style: normalText( fontSize: fontSize, fontWeight:  fontWeight, fontColor: AppColor.primaryColor),
+          ),
         )).toList(),
 
         value: value,

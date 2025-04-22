@@ -88,7 +88,7 @@ class HomeView extends GetView<HomeController> {
                       return InkWell(
                        onTap: (){
                          controller.selectedCourseID.value = data.id.toString(); //assign the value for the course id.
-                         Get.toNamed(Routes.COURSES_SINGLE_COURSE);
+                         Get.toNamed(Routes.COURSES_SINGLE_COURSE, arguments: data);
                        },
                         child: Container(
                           margin: EdgeInsets.only(bottom: 10),

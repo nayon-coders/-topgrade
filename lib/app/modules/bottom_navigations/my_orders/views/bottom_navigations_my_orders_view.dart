@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:kuwait_elearing/app/routes/app_pages.dart';
 import 'package:kuwait_elearing/app/widgets/app_network_images.dart';
 import 'package:kuwait_elearing/app/widgets/app_style.dart';
@@ -121,27 +122,6 @@ class BottomNavigationsMyOrdersView
                                 ),
                               );
                             }
-                          ),
-                          Positioned(
-                            right: 15, top:0,
-                            child: Container(
-                              width: 20,
-                              height:20,
-                              decoration: BoxDecoration(
-                                  color: AppColor.secounderyColor,
-                                  borderRadius: BorderRadius.circular(100)
-                              ),
-                              child: Center(
-                                child: Obx(() {
-                                    return Text("${controller.myCourseOrderListModel.value.data!.length}",
-                                      style: normalText(
-                                          fontSize: 10, fontColor: AppColor.white
-                                      ),
-                                    );
-                                  }
-                                ),
-                              ),
-                            ),
                           ),
                         ],
                       ),
@@ -281,7 +261,7 @@ class CoursesList extends GetView<BottomNavigationsMyOrdersController> {
               itemBuilder: (_, index){
                 var data =  controller.myCourseOrderListModel.value.data![index];
                 return InkWell(
-                  onTap: ()=>Get.toNamed(Routes.COURSE_ORDER_DETAILS),
+                  onTap: ()=>Get.toNamed(Routes.COURSE_ORDER_DETAILS, arguments: data),
                   child: Container(
                     width: Get.width,
                     padding: EdgeInsets.all(20),
@@ -297,7 +277,7 @@ class CoursesList extends GetView<BottomNavigationsMyOrdersController> {
                           height: 60,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
-                            child: AppNetworkImage(url: "${data.status}",
+                            child: AppNetworkImage(url: "${data.courseImage}",
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -306,7 +286,7 @@ class CoursesList extends GetView<BottomNavigationsMyOrdersController> {
                         SizedBox(
                           width: 100,
                           child: Center(
-                            child: Text("${data.status}",
+                            child: Text("${data.courseTitle}",
                               textAlign: TextAlign.center,
                               style: normalText(
                                   fontSize: 14
@@ -320,25 +300,25 @@ class CoursesList extends GetView<BottomNavigationsMyOrdersController> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("${data.id}",
+                              Text("${data.packagesTitle}",
                                 textAlign: TextAlign.center,
                                 style: normalText(
                                     fontSize: 13
                                 ),
                               ),
-                              Text("Date: ${data.updatedAt}",
+                              Text("Date: ${DateFormat("dd-MM-yyyy").format(data.orderCreateAt!)}",
+                                textAlign: TextAlign.center,
+                                style: normalText(
+                                    fontSize: 13
+                                ), 
+                              ),
+                              Text("Order #${data.orderId}",
                                 textAlign: TextAlign.center,
                                 style: normalText(
                                     fontSize: 13
                                 ),
                               ),
-                              Text("Order #${data.couponCode}",
-                                textAlign: TextAlign.center,
-                                style: normalText(
-                                    fontSize: 13
-                                ),
-                              ),
-                              Text("Status: ${data.status} ",
+                              Text("Status: ${data.orderStatus} ",
                                 textAlign: TextAlign.center,
                                 style: normalText(
                                     fontSize: 13

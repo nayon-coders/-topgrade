@@ -10,11 +10,14 @@ import 'package:kuwait_elearing/utility/app_json.dart';
 
 import '../../../../../utility/app_assets.dart';
 import '../../../../../utility/app_color.dart';
+import '../../../bottom_navigations/home/model/all_university_course_model.dart';
 import '../controllers/courses_submit_assignment_controller.dart';
 
 class CoursesSubmitAssignmentView
     extends GetView<CoursesSubmitAssignmentController> {
-  const CoursesSubmitAssignmentView({super.key});
+   CoursesSubmitAssignmentView({super.key});
+
+  final SingleUniversityCourseItem data = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,10 +69,17 @@ class CoursesSubmitAssignmentView
                     ),
                   ),
                   SizedBox(height: 5,),
-                  CustomDropDown(
-                      items: allCourses,
-                      hint: "",
-                      onChange: (v)=>controller.selectCourses(v)
+                  Container(
+                    padding: EdgeInsets.only(left: 20, top: 7, bottom: 7, right: 20),
+                    width: Get.width,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      color: AppColor.white,
+                      borderRadius: BorderRadius.circular(100)
+                    ),
+                    child: Text("${data.title}",
+                      style: normalText(fontColor: AppColor.primaryColor, fontSize: 13),
+                    ),
                   )
                 ],
               ),
@@ -157,7 +167,15 @@ class CoursesSubmitAssignmentView
               ),
 
               SizedBox(height: 30,),
-              AppButton(title: "Submit", onTap: (){}),
+              Obx((){
+                  return AppButton(
+                    isLoading: controller.isLoading.value,
+                      title: "Submit",
+                      onTap: (){
+                        controller.submitAssignment();
+                      });
+                }
+              ),
               SizedBox(height: 30,),
 
 

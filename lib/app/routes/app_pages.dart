@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kuwait_elearing/app/middleware/auth_middleware.dart';
 import 'package:kuwait_elearing/app/modules/checkout/views/payment.dart';
+import 'package:kuwait_elearing/app/modules/course_order_details/views/my_course_video.dart';
 
 import '../modules/assignment_order_details/bindings/assignment_order_details_binding.dart';
 import '../modules/assignment_order_details/views/assignment_order_details_view.dart';
@@ -152,7 +153,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SINGLE_COURSE,
-      page: () => const CoursesSingleCourseView(),
+      page: () =>  CoursesSingleCourseView(),
       binding: CoursesSingleCourseBinding(),
     ),
     GetPage(
@@ -162,7 +163,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.COURSES_SUBMIT_ASSIGNMENT,
-      page: () => const CoursesSubmitAssignmentView(),
+      page: () =>  CoursesSubmitAssignmentView(),
       binding: CoursesSubmitAssignmentBinding(),
     ),
     GetPage(
@@ -232,7 +233,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.COURSE_ORDER_DETAILS,
-      page: () => const CourseOrderDetailsView(),
+      page: () =>  CourseOrderDetailsView(),
+      binding: CourseOrderDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.COURSE_ORDER_DETAILs_VIDEO,
+      page: () =>  MyCourseVideo(),
       binding: CourseOrderDetailsBinding(),
     ),
     GetPage(

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
+import '../../../bottom_navigations/my_orders/model/my_order_model.dart';
 import '../../course_content/model/single_course_details_model.dart';
 
 class CoursesCourseVideoOverviewController extends GetxController {
@@ -11,10 +12,14 @@ class CoursesCourseVideoOverviewController extends GetxController {
   late VideoPlayerController videoPlayer;
   var isInitialized = false.obs;
   var isPlaying = false.obs;
+  Rx<Vedio> selectedMyCourseVideos = Vedio().obs;
+
   Semester packageData = Get.arguments["package"] ?? Get.arguments["semester"];
 
   var currentTime = "00:00".obs;
   var totalTime = "00:00".obs;
+
+  var currentPosition = Rx<Duration>(Duration.zero);
 
 
   Timer? _timer; // 🔥 Make it nullable to avoid late errors
@@ -25,6 +30,19 @@ class CoursesCourseVideoOverviewController extends GetxController {
     super.onInit();
     generateAllThumbnails();
   }
+
+  // Selected video
+  void selectedVideos(Vedio video)async {
+    await videoPlayer?.dispose();
+    _timer?.cancel();
+    isInitialized.value = false;
+    isPlaying.value = false;
+    currentTime.value = "00:00";
+    totalTime.value = "00:00";
+    selectedMyCourseVideos.value = video;
+    initializePlayer(video.url ?? "https://cdn.pixabay.com/video/2017/04/05/8579-211655655_large.mp4");
+  }
+
 
   Future<void> initializePlayer(String url) async {
     print("Video URL init --- $url");
@@ -43,8 +61,9 @@ class CoursesCourseVideoOverviewController extends GetxController {
         currentTime.value = formatDuration(videoPlayer.value.position);
       });
 
-      videoPlayer.addListener(() {
-        isPlaying.value = videoPlayer.value.isPlaying;
+      videoPlayer!.addListener(() {
+        isPlaying.value = videoPlayer!.value.isPlaying;
+        currentPosition.value = videoPlayer!.value.position;
       });
     } catch (error, stackTrace) {
       print("Video initialization failed: $error");
@@ -77,9 +96,11 @@ class CoursesCourseVideoOverviewController extends GetxController {
   //thumbline
   RxList<Uint8List?> thumbnailList = <Uint8List?>[].obs;
 
+  RxBool isThumbnailList = false.obs;
   Future<void> generateAllThumbnails() async {
     thumbnailList.clear();
 
+    isThumbnailList.value = true;
     for (var url in packageData.videos!) {
       print("url.url! -- ${url.url!}");
       final data = await VideoThumbnail.thumbnailData(
@@ -93,6 +114,7 @@ class CoursesCourseVideoOverviewController extends GetxController {
       print("thumbnailList -- ${thumbnailList}");
       update();
     }
+    isThumbnailList.value = false;
   }
   @override
   void onClose() {

@@ -4,26 +4,25 @@ import 'package:kuwait_elearing/app/modules/courses/course_content/controllers/c
 import 'package:video_player/video_player.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../widgets/app_style.dart';
-import '../controllers/courses_course_video_overview_controller.dart';
+import '../../../widgets/app_style.dart';
+import '../controllers/course_order_details_controller.dart';
 
-
-class FullScreenTestVideo extends StatefulWidget {
+class FullScreenVideo extends StatefulWidget {
   final VideoPlayerController videoPlayer;
   final dynamic currentTime;
   final dynamic totalTime;
 
-  const FullScreenTestVideo({Key? key, required this.videoPlayer, this.currentTime, this.totalTime}) : super(key: key);
+  const FullScreenVideo({Key? key, required this.videoPlayer, this.currentTime, this.totalTime}) : super(key: key);
 
   @override
-  State<FullScreenTestVideo> createState() => _FullScreenTestVideoState();
+  State<FullScreenVideo> createState() => _FullScreenVideoState();
 }
 
-class _FullScreenTestVideoState extends State<FullScreenTestVideo> {
+class _FullScreenVideoState extends State<FullScreenVideo> {
   double _volume = 1.0;
   bool _isControlsVisible = true;
 
-  final CoursesCourseVideoOverviewController _courseContentController = Get.find();
+  final CourseOrderDetailsController _courseContentController = Get.find();
 
   @override
   void initState() {
@@ -76,7 +75,7 @@ class _FullScreenTestVideoState extends State<FullScreenTestVideo> {
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            setState(() {
+                          setState(() {
                               videoPlayer.value.isPlaying
                                   ? videoPlayer.pause()
                                   : videoPlayer.play();
@@ -104,14 +103,14 @@ class _FullScreenTestVideoState extends State<FullScreenTestVideo> {
                 top: 20,
                 right: 20,
                 child: IconButton(
-                    icon: Icon(Icons.close, color: Colors.white),
-                    onPressed: () async{
-                      await SystemChrome.setPreferredOrientations([
-                        DeviceOrientation.portraitUp,
-                      ]);
-                      await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-                      Get.back();
-                    }
+                  icon: Icon(Icons.close, color: Colors.white),
+                  onPressed: () async{
+                    await SystemChrome.setPreferredOrientations([
+                      DeviceOrientation.portraitUp,
+                    ]);
+                    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+                    Get.back();
+                  }
                 ),
               ),
             if(_isControlsVisible)
@@ -129,30 +128,30 @@ class _FullScreenTestVideoState extends State<FullScreenTestVideo> {
                   ),
                 ),
               ),
-            Positioned(
-                bottom: 50,
-                left: 20,
-                right: 20,
-                child: Obx(() {
-                  String currentTime = _courseContentController.formatDuration(_courseContentController.currentPosition.value);
-                  return RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                            text: "${currentTime} ",
-                            style: normalText(fontSize: 10)
-                        ),
-                        TextSpan(
-                            text: "/ ${_courseContentController.totalTime.value} ",
-                            style: normalText(fontSize: 10, fontColor: Colors.grey)
-                        )
-                      ],
-                    ),
-                  );
-                })
+              Positioned(
+              bottom: 50,
+              left: 20,
+              right: 20,
+              child: Obx(() {
+                String currentTime = _courseContentController.formatDuration(_courseContentController.currentPosition.value);
+                return RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                          text: "${currentTime} ",
+                          style: normalText(fontSize: 10)
+                      ),
+                      TextSpan(
+                          text: "/ ${_courseContentController.totalTime.value} ",
+                          style: normalText(fontSize: 10, fontColor: Colors.grey)
+                      )
+                    ],
+                  ),
+                );
+              })
 
 
-            ),
+              ),
           ],
         ),
       ),
